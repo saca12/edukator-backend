@@ -15,6 +15,15 @@ if os.path.exists(env_path):
 # Sécurité
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['*'] # À affiner plus tard avec ton URL Render
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles', # Indispensable pour collectstatic
+    # Vos autres apps (accounts, education, etc.)
+]
 
 # Base de données (Utilise la variable d'env DATABASE_URL de Render)
 DATABASES = {
