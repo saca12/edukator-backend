@@ -1,9 +1,16 @@
-import dj_database_url
 import os
+import dj_database_url
+from pathlib import Path
 
-# ...
+BASE_DIR = Path(__file__).resolve().parent
 
-# 1. On tente d'abord de lire DATABASE_URL (Standard sur Render)
+# On ne charge python-dotenv QUE si on n'est pas sur Render
+# Sur Render, les variables sont injectées directement dans l'OS
+if not os.environ.get('RENDER'):
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+# --- CONFIGURATION BASE DE DONNÉES EXCLUSIVE RENDER/PROD ---
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
 if DATABASE_URL:
@@ -15,14 +22,13 @@ if DATABASE_URL:
         )
     }
 else:
-    # 2. Sinon, on utilise la config locale (Variables séparées)
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("POSTGRES_DB", "tuteur_ia"),
-            "USER": os.getenv("POSTGRES_USER", "tuteur_ia"),
-            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "tuteur_ia"),
-            "HOST": os.getenv("POSTGRES_HOST", "localhost"),
-            "PORT": os.getenv("POSTGRES_PORT", "5432"),
-        }
-    }
+    # Si DATABASE_URL est absente sur Render, l'app doit crash immédiatement 
+    # avec une erreur explicite plutôt que de chercher localhost
+    raise ValueError("L'environnement DATABASE_URL n'est pas configuré sur Render.")
+
+# --- CONFIGURATION STATIQUE (WhiteNoise) ---
+# Assurez-vous que ces lignes sont présentes pour collectstatic
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
