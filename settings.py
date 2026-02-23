@@ -1,6 +1,7 @@
 import dj_database_url
 import os
-
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent
 # Sécurité
 SECRET_KEY = os.environ.get('SECRET_KEY', '16269758h')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'

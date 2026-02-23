@@ -1,1 +1,1 @@
-web: gunicorn edukator-backend.wsgi
+web: gunicorn wsgi:application
