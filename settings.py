@@ -1,31 +1,30 @@
 import dj_database_url
 import os
 
+# settings.py
+
 INSTALLED_APPS = [
-    # ...
-    'corsheaders',
-    'rest_framework', # Si vous utilisez DRF
-    # ...
+    ...,
+    'corsheaders',  #
+    ...
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # DOIT être tout en haut
+    'corsheaders.middleware.CorsMiddleware',  # DOIT ÊTRE EN PREMIER
     'django.middleware.common.CommonMiddleware',
-    # ...
+    ...
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://edukatorproj-pzxuqzfx6-saca12s-projects.vercel.app",
-    "https://*.railway.app" # Optionnel mais recommandé
-]
-# Remplacez par l'URL réelle de votre projet Vercel
+# Autorisez votre domaine Vercel spécifique
 CORS_ALLOWED_ORIGINS = [
-    "https://edukatorproj-pzxuqzfx6-saca12s-projects.vercel.app",
+    "https://edukator-student.vercel.app",
 ]
 
-# Si vous voulez tester rapidement sans restriction (moins sécurisé)
-# CORS_ALLOW_ALL_ORIGINS = True
-
+# Si vous voulez aussi autoriser le mode développement local
+CORS_ALLOWED_ORIGIN_WHITELIST = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 # Railway injecte DATABASE_URL automatiquement
 DATABASES = {
     'default': dj_database_url.config(
