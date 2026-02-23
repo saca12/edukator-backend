@@ -17,7 +17,12 @@ DATABASES = {
         ssl_require=True
     )
 }
-
+# TEST DE DÉBOGAGE (à supprimer après)
+if os.environ.get('RENDER'):
+    print("--- DEBUG RENDER ---")
+    print(f"DATABASE_URL trouvée : {os.environ.get('DATABASE_URL') is not None}")
+    print(f"HOST utilisé : {DATABASES['default'].get('HOST')}")
+    print("--------------------")
 # Sécurité supplémentaire : si DATABASE_URL est vide (erreur de config), 
 # on remet l'ancienne config pour ne pas casser ton local
 if not DATABASES['default']:
