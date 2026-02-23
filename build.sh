@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
+# exit on error
 set -o errexit
 
-# Installation propre
-pip install -r requirements.txt
+pip install -r requirements.txt #
 
-# Préparation des fichiers pour la prod
-python manage.py collectstatic --no-input
+# Collecte des fichiers statiques
+python manage.py collectstatic --no-input #
 
-# Migration vers la base de données configurée dans DATABASE_URL
-python manage.py migrate --no-input
+# Migration de la base de données
+# Cette commande échouera si DATABASE_URL n'est pas dans l'onglet Environment de Render
+python manage.py migrate --no-input #
