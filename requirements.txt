@@ -1,3 +1,9 @@
+django
+gunicorn
+dj-database-url
+psycopg2-binary
+django-cors-headers
+whitenoise
 aiodns==3.2.0
 aiohappyeyeballs==2.6.1
 aiohttp==3.11.16
